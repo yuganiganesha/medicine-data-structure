@@ -45,10 +45,7 @@ class MedicineManager {
             root.left = insertRecode(root.left, medicine);
         else if (medicine.name.compareTo(root.medicine.name) > 0)
             root.right = insertRecode(root.right, medicine);
-/*else {
-            //if equal both items then it's displayed and ignore dish name and price storing
-            System.out.println("This Medicine " + "(" + medicine.name + ")" + " already in the medicine");
-        }*/
+
 
         return root;
     }
