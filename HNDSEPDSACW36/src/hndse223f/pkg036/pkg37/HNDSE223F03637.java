@@ -45,6 +45,20 @@ class MedicineManager {
             root.left = insertRecode(root.left, medicine);
         else if (medicine.name.compareTo(root.medicine.name) > 0)
             root.right = insertRecode(root.right, medicine);
+  else {
+           
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Medicine " + medicine.name + " already exists.");
+            System.out.println("Do you want to update the quantity? (Y/N)");
+            char choice = scanner.next().charAt(0);
+            if (Character.toUpperCase(choice) == 'Y') {
+                
+                root.medicine.quantity += medicine.quantity;
+                System.out.println("Quantity updated successfully.");
+            }
+            
+            scanner.close();
+        }
 
 
         return root;
