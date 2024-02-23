@@ -16,6 +16,8 @@ class Medicine {
         this.price = price;
         this.expiryDate = expiryDate;
     }
+    double getTotalValue(){
+                return quantity * price;
 }
 
 class TreeNode {
@@ -114,15 +116,35 @@ class MedicineManager {
     }
 
     void display() {
-        inorder(root);
+         List<Medicine> sortedMedicines = new ArrayList<>();
+        inorder(root, sortedMedicines);
+
+        
+        System.out.println("Medicines in stock (Sorted by Name):");
+        for (Medicine medicine : sortedMedicines) {
+            System.out.println("Name: " + medicine.name + ", Quantity: " + medicine.quantity + ", Price: $" + medicine.price + ", Expires: " + medicine.expiryDate);
+        }
+
+        
+        double totalValue = calculateTotalValue(sortedMedicines);
+        System.out.println("Total Inventory Value: $" + totalValue);
     }
 
-    private void inorder(TreeNode root) {
+    private void inorder(TreeNode root, List<Medicine> sortedMedicines) {
         if (root != null) {
-            inorder(root.left);
-            System.out.println(root.medicine.name + " - " + root.medicine.quantity + " - $" + root.medicine.price + " - Expires: " + root.medicine.expiryDate);
-            inorder(root.right);
+            inorder(root.left, sortedMedicines);
+            sortedMedicines.add(root.medicine);
+            inorder(root.right, sortedMedicines);
         }
+    }
+
+    private double calculateTotalValue(List<Medicine> medicines) {
+        double totalValue = 0;
+        for (Medicine medicine : medicines) {
+            totalValue += medicine.getTotalValue();
+        }
+        return totalValue;
+    }
     }
 }
 
@@ -169,7 +191,7 @@ public class HNDSE223F03637 {
                     System.out.println("Medicine removed successfully");
                     break;
                 case 4:
-                    System.out.println("Medicines in stock:");
+    
                     manager.display();
                     break;
                 case 5:
