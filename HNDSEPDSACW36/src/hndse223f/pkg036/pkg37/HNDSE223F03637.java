@@ -7,10 +7,14 @@ import java.util.Scanner;
 class Medicine {
     String name;
     int quantity;
+    double price;
+    String expiryDate;
 
     Medicine(String name, int quantity) {
         this.name = name;
         this.quantity = quantity;
+        this.price = price;
+        this.expiryDate = expiryDate;
     }
 }
 
@@ -31,8 +35,8 @@ class MedicineManager {
         root = null;
     }
 
-    void insert(String name, int quantity) {
-        root = insertRecode(root, new Medicine(name, quantity));
+    void insert(String name, int quantity,double price, String expiryDate) {
+        root = insertRecode(root, new Medicine(name, quantity, price, expiryDate));
     }
 
     private TreeNode insertRecode(TreeNode root, Medicine medicine) {
@@ -116,7 +120,7 @@ class MedicineManager {
     private void inorder(TreeNode root) {
         if (root != null) {
             inorder(root.left);
-            System.out.println(root.medicine.name + " - " + root.medicine.quantity);
+            System.out.println(root.medicine.name + " - " + root.medicine.quantity + " - $" + root.medicine.price + " - Expires: " + root.medicine.expiryDate);
             inorder(root.right);
         }
     }
@@ -143,14 +147,18 @@ public class HNDSE223F03637 {
                     String name = scanner.next();
                     System.out.print("Enter quantity: ");
                     int quantity = scanner.nextInt();
-                    manager.insert(name, quantity);
+                    System.out.print("Enter price: ");
+                    double price = scanner.nextDouble();
+                    System.out.print("Enter expiration date (MM/YYYY): ");
+                    String expiryDate = scanner.next();
+                    manager.insert(name, quantity, price, expiryDate);
                     break;
                 case 2:
                     System.out.print("Enter medicine name to search: ");
                     String searchName = scanner.next();
                     Medicine searchResult = manager.search(searchName);
                     if (searchResult != null)
-                        System.out.println("Found: " + searchResult.name + " - " + searchResult.quantity);
+                        System.out.println("Found: " + searchResult.name + " - " + searchResult.quantity + " - $" + searchResult.price + " - Expires: " + searchResult.expiryDate);
                     else
                         System.out.println("Medicine not found");
                     break;
