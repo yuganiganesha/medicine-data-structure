@@ -1,23 +1,26 @@
-
 package hndse223f.pkg036.pkg37;
 
 
-import java.util.Scanner;
+
+import java.util.*;
 
 class Medicine {
     String name;
     int quantity;
     double price;
-    String expiryDate;
+    String expiryDate; 
 
-    Medicine(String name, int quantity) {
+    Medicine(String name, int quantity, double price, String expiryDate) {
         this.name = name;
         this.quantity = quantity;
         this.price = price;
         this.expiryDate = expiryDate;
     }
-    double getTotalValue(){
-                return quantity * price;
+
+    
+    double getTotalValue() {
+        return quantity * price;
+    }
 }
 
 class TreeNode {
@@ -37,35 +40,38 @@ class MedicineManager {
         root = null;
     }
 
-    void insert(String name, int quantity,double price, String expiryDate) {
-        root = insertRecode(root, new Medicine(name, quantity, price, expiryDate));
+    void insert(String name, int quantity, double price, String expiryDate) {
+        root = insertRecord(root, new Medicine(name, quantity, price, expiryDate));
     }
 
-    private TreeNode insertRecode(TreeNode root, Medicine medicine) {
+    private TreeNode insertRecord(TreeNode root, Medicine medicine) {
         if (root == null) {
             root = new TreeNode(medicine);
             return root;
         }
 
         if (medicine.name.compareTo(root.medicine.name) < 0)
-            root.left = insertRecode(root.left, medicine);
+            root.left = insertRecord(root.left, medicine);
         else if (medicine.name.compareTo(root.medicine.name) > 0)
-            root.right = insertRecode(root.right, medicine);
-  else {
-           
-            Scanner scanner = new Scanner(System.in);
+            root.right = insertRecord(root.right, medicine);
+        else {
+            
+            java.util.Scanner scanner = new java.util.Scanner(System.in);
             System.out.println("Medicine " + medicine.name + " already exists.");
-            System.out.println("Do you want to update the quantity? (Y/N)");
+            System.out.println("Do you want to update the quantity, price, and expiration date? (Y/N)");
             char choice = scanner.next().charAt(0);
             if (Character.toUpperCase(choice) == 'Y') {
                 
                 root.medicine.quantity += medicine.quantity;
-                System.out.println("Quantity updated successfully.");
+              
+                root.medicine.price = medicine.price;
+                
+                root.medicine.expiryDate = medicine.expiryDate;
+                System.out.println("Quantity, Price, and Expiration Date updated successfully.");
             }
             
             scanner.close();
         }
-
 
         return root;
     }
@@ -115,8 +121,9 @@ class MedicineManager {
         return current;
     }
 
+    
     void display() {
-         List<Medicine> sortedMedicines = new ArrayList<>();
+        List<Medicine> sortedMedicines = new ArrayList<>();
         inorder(root, sortedMedicines);
 
         
@@ -145,13 +152,12 @@ class MedicineManager {
         }
         return totalValue;
     }
-    }
 }
 
 public class HNDSE223F03637 {
     public static void main(String[] args) {
         MedicineManager manager = new MedicineManager();
-        Scanner scanner = new Scanner(System.in);
+        java.util.Scanner scanner = new java.util.Scanner(System.in);
         int choice;
 
         do {
@@ -191,7 +197,6 @@ public class HNDSE223F03637 {
                     System.out.println("Medicine removed successfully");
                     break;
                 case 4:
-    
                     manager.display();
                     break;
                 case 5:
@@ -205,5 +210,8 @@ public class HNDSE223F03637 {
         scanner.close();
     }
 }
+
+
+
 
 
